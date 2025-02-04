@@ -2,20 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
-  mode: "production", // Ensure Vite runs in production mode
+  mode: "development",
   build: {
-    minify: "esbuild", // Ensures dead code elimination
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("react")) return "react"; // React-related libraries
-            if (id.includes("axios") || id.includes("lodash")) return "vendor"; // Other dependencies
-          }
-        },
-      },
-    },
-    chunkSizeWarningLimit: 1000, // Increase limit (optional)
+    // Set production build without dead code elimination for development mode
+    minify: false, 
   },
   server: {
     port: 10000,
