@@ -1,34 +1,34 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    "process.env.NODE_ENV": JSON.stringify("production"),
-  },
+  mode: "production", // Ensure Vite runs in production mode
   build: {
+    minify: "esbuild", // Ensures dead code elimination
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ["react", "react-dom"], // Separate React-related libraries
-          vendor: ["lodash", "axios"], // Other common dependencies
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react")) return "react"; // React-related libraries
+            if (id.includes("axios") || id.includes("lodash")) return "vendor"; // Other dependencies
+          }
         },
       },
     },
     chunkSizeWarningLimit: 1000, // Increase limit (optional)
   },
   server: {
-    port:10000,
-    host: '0.0.0.0', 
+    port: 10000,
+    host: "localhost",
+    allowedHosts:["rentapp-2.onrender.com"],
     proxy: {
-      '/api': {
+      "/api": {
         target: "https://rentapp-edwq.onrender.com",
         secure: false,
-        changeOrigin:true,
-        ws:true,
+        changeOrigin: true,
+        ws: true,
       },
     },
   },
-
   plugins: [react()],
-})
+});
