@@ -19,7 +19,7 @@ export default defineConfig({
   },
   server: {
     port: 10000,
-    host: "localhost",
+    host: "0.0.0.0",
     allowedHosts:["rentapp-2.onrender.com"],
     proxy: {
       "/api": {
