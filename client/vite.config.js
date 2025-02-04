@@ -20,7 +20,7 @@ export default defineConfig({
   server: {
     port: 10000,
     host: "0.0.0.0",
-    allowedHosts:["rentapp-2.onrender.com"],
+    allowedHosts:["rentapp-1.onrender.com"],
     proxy: {
       "/api": {
         target: "https://rentapp-edwq.onrender.com",
